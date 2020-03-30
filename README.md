@@ -4,11 +4,11 @@
 
 **End point:** GET /user/1
 
-'''json
+```json
 {
   "name": "John",
   "age": "23",
   "email": "john.doe@google.com"
 }
-'''
+```
 
