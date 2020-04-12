@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.nagarro.msa.users.exceptions.UserNotFoundException;
 import com.nagarro.msa.users.userbean.User;
+import com.nagarro.msa.users.userdto.UserDto;
 import com.nagarro.msa.users.userrepository.UserRepository;
 
 @RestController
@@ -29,12 +30,12 @@ public class UserController {
 	UserRepository userRepository;
 
 	@GetMapping("/{id}")
-	public Optional<User> retrieveProduct(@PathVariable Integer id) {
-		Optional<User> user = userRepository.findById(id);
-		if (!user.isPresent()) {
-			throw new UserNotFoundException("User not found at id- " + id);
-		}
-		return user;
+	public UserDto retrieveUser(@PathVariable Integer id) {
+		User user = userRepository.findById(id).orElseThrow(
+			    () -> new UserNotFoundException("User not found at id- " + id)
+			    );
+		UserDto requiredUser = new UserDto(user.getUserName(), user.getUserAge(), user.getUserEmail());
+		return requiredUser;
 	}
 
 	@GetMapping("")
